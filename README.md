@@ -1,6 +1,7 @@
 # Recoder
-Simple bash script to make recording screen by shortcuts easily. Only work on wlroots based wayland compositors ,uses wf-recorder as backend.
-default 
+Simple bash script to make recording screen by shortcuts easily. Only work on wlroots based wayland compositors ,uses wf-recorder as backend default. 
+
+default language is chinese, fallback language is english
 
 Features:
  Area selection,
