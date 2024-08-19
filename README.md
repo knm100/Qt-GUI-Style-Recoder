@@ -1,5 +1,5 @@
 # Recoder
-Simple bash script to make recording screen by shortcuts easily. Only work on wlroots based wayland compositors ,uses wf-recorder as backend default.  Inspired by https://github.com/Vescrity/wfrc. 
+Simple qt GUI flavor bash script to make recording screen by shortcuts easily. Only work on wlroots based wayland compositors ,uses wf-recorder as backend default.  Inspired by https://github.com/Vescrity/wfrc. 
 
 default language is chinese, fallback language is english
 
