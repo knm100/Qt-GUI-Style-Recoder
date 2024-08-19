@@ -1,1 +1,72 @@
+#!/bin/bash
+[ -n "$WAYLAND_DISPLAY" ] ||  exit 1
+SCRIPT_NAME=Recorder
+LOCK=/tmp/WFRCLOCK
+if [ -f "$LOCK" ]; then
+  ps --ppid $(cat "$LOCK") | awk '{if($1~/[0-9]+/) print $1}'| xargs kill -2
+  rm "$LOCK"
+  exit
 
+else
+  echo $$ > "$LOCK"
+  
+  function TIMEANDSIZE() {
+  SIZE="$(ls -lh $FILE_NAME | tr -s ' ' | cut -d ' ' -f 5)"
+  ENDTIME=$(date +%s)
+  duration=$((ENDTIME - STARTTIME))
+  #resolution=$(echo $output | cut -d' ' -f2)
+  minutes=$((duration / 60))
+  seconds=$((duration % 60))
+  if [ $minutes -gt 0 ]; then
+    formatted_duration="${minutes}m ${seconds}s"
+  else
+    formatted_duration="${seconds}s"
+  fi
+  
+  if [ $LocalTran = zh_CN ]; then 
+     Finshed_Msg="视频已完成$FILE_NAME($formatted_duration,$SIZE)"
+  else
+     Finshed_Msg="Finshed the video:$FILE_NAME($formatted_duration,$SIZE)"
+  fi
+  kdialog  --msgbox "$Finshed_Msg"
+  }
+  
+  LocalTran=${LANG%.*}
+  if [ $LocalTran = zh_CN ]; then 
+     Choose_Screen_Area=选择录屏区域
+     Full_Screen_Withou_Audio=全屏无声
+     Full_Screen_With_Audio=全屏有声
+     Area_Without_Audio=局部无声
+     Area_With_Audio=局部有声
+     Warring_Msg="程序没有正常运行,请重新检查你是否按正确步骤运行程序。"
+     
+   else
+    Choose_Screen_Area="Choose the area for recording the video"
+    Full_Screen_Withou_Audio="Full Screen Without Audio" 
+    Full_Screen_With_Audio="Full Screen With Audio" 
+    Area_Without_Audio="Area of Screen Wihtout Audio" 
+    Area_With_Audio="Area of Screen With Audio" 
+    Warring_Msg="Failed to record video,Please check out and start again"
+  fi
+     
+  #chart=`kdialog --radiolist "选择录屏区域:" 1 "全屏无声" off 2 "全屏有声" off 3 "局部无声" on  4 "局部有声" off --geometry 200x200+0+0`
+  #最小的尺寸好像是200x200, 后面位置+0+0 不会有效果。
+  #AUDIO_DEV="$(LANG=C pactl list sources | grep 'Name.*output'|cut -d ' ' -f 2)"
+  chart=`kdialog --combobox "$Choose_Screen_Area" "$Full_Screen_Withou_Audio" "$Full_Screen_With_Audio" "$Area_Without_Audio" " $Area_With_Audio"  --default "$Area_Without_Audio"`
+
+  FILE_NAME="/home/knm/视频/R-$(date -u +%Y-%m-%dT%H-%M-%S).mp4"
+  STARTTIME=$(date +%s)
+  if [ "$chart" = "$Full_Screen_Withou_Audio" ]; then
+     wf-recorder -f  $FILE_NAME&&TIMEANDSIZE
+     echo $wf_recorder_pid > /home/knm/wfpid.txt
+   elif [ "$chart" = "$Full_Screen_With_Audio" ]; then
+     wf-recorder -a -f $FILE_NAME&&TIMEANDSIZE
+   elif [ "$chart" = "$Area_Without_Audio" ]; then
+     wf-recorder -g "$(slurp)" -f $FILE_NAME&&TIMEANDSIZE
+   elif [ "$chart" = "$Area_With_Audio" ]; then
+     wf-recorder -a -g "$(slurp)" -f $FILE_NAME&&TIMEANDSIZE
+   else
+     kdialog  --error "$Warring_Msg" 
+  fi
+  exit
+fi
