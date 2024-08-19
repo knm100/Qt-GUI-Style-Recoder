@@ -3,18 +3,18 @@ Simple bash script to make recording screen by shortcuts easily. Only work on wl
 default 
 
 Features:
- Area selection
- Record the audio
- Notification
+ Area selection,
+ Record the audio,
+ Notification.
 
 
 Dependencies:
-wf-recorder
-bash
-grep
-slurp
-libnotify
-libpulse
+wf-recorder,
+bash,
+grep,
+slurp,
+kdialog,
+libpulse.
 
 Usage /
 (optional) Add it to your PATH /
