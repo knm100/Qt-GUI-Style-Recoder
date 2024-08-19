@@ -58,7 +58,6 @@ else
   STARTTIME=$(date +%s)
   if [ "$chart" = "$Full_Screen_Withou_Audio" ]; then
      wf-recorder -f  $FILE_NAME&&TIMEANDSIZE
-     echo $wf_recorder_pid > /home/knm/wfpid.txt
    elif [ "$chart" = "$Full_Screen_With_Audio" ]; then
      wf-recorder -a -f $FILE_NAME&&TIMEANDSIZE
    elif [ "$chart" = "$Area_Without_Audio" ]; then
