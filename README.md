@@ -4,9 +4,9 @@ Simple bash script to make recording screen by shortcuts easily. Only work on wl
 default language is chinese, fallback language is english
 
 Features:
- Area selection,
- Record the audio,
- Notification.
+ Area selection or full screen,
+ Record the audio(optional),
+ dialog for Notification.
 
 
 Dependencies:
