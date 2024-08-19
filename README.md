@@ -20,4 +20,4 @@ libpulse.
 Usage /
 (optional) Add it to your PATH /
 (optional) Bind it to a keybind /
-Run it for the first time i to record and the second time it will stop recording 
+Run it for the first time to record and the second time it will stop recording 
