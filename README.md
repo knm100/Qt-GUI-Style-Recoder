@@ -2,13 +2,13 @@
 Simple bash script to make recording screen by shortcuts easily. Only work on wlroots based wayland compositors ,uses wf-recorder as backend.
 default 
 
-Features
+Features:
  Area selection
  Record the audio
  Notification
 
 
-Dependencies
+Dependencies:
 wf-recorder
 bash
 grep
