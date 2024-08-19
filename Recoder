@@ -54,7 +54,7 @@ else
   #AUDIO_DEV="$(LANG=C pactl list sources | grep 'Name.*output'|cut -d ' ' -f 2)"
   chart=`kdialog --combobox "$Choose_Screen_Area" "$Full_Screen_Withou_Audio" "$Full_Screen_With_Audio" "$Area_Without_Audio" " $Area_With_Audio"  --default "$Area_Without_Audio"`
 
-  FILE_NAME="/home/knm/视频/R-$(date -u +%Y-%m-%dT%H-%M-%S).mp4"
+  FILE_NAME="~/R-$(date -u +%Y-%m-%dT%H-%M-%S).mp4"
   STARTTIME=$(date +%s)
   if [ "$chart" = "$Full_Screen_Withou_Audio" ]; then
      wf-recorder -f  $FILE_NAME&&TIMEANDSIZE
