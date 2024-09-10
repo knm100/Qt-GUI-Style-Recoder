@@ -13,8 +13,7 @@ Features:
 
 Dependencies:
 wf-recorder,
-bash,
-grep,
+bash（need to use the bash command grep,ps,xargs),
 slurp,
 kdialog,
 libpulse.
