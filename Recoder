@@ -39,6 +39,7 @@ else
      Area_Without_Audio=局部无声
      Area_With_Audio=局部有声
      Warring_Msg="程序没有正常运行,请重新检查你是否按正确步骤运行程序。"
+     Cannel_Msg="已取消录屏，如需要录屏，请重新开始"
      
    else
     Choose_Screen_Area="Choose the area for recording the video"
@@ -47,13 +48,19 @@ else
     Area_Without_Audio="Area of Screen Wihtout Audio" 
     Area_With_Audio="Area of Screen With Audio" 
     Warring_Msg="Failed to record video,Please check out and start again"
+    Cannel_Msg="Canneled,Please Resatrt the programe"
   fi
      
   #chart=`kdialog --radiolist "选择录屏区域:" 1 "全屏无声" off 2 "全屏有声" off 3 "局部无声" on  4 "局部有声" off --geometry 200x200+0+0`
   #最小的尺寸好像是200x200, 后面位置+0+0 不会有效果。
   #AUDIO_DEV="$(LANG=C pactl list sources | grep 'Name.*output'|cut -d ' ' -f 2)"
   chart=`kdialog --combobox "$Choose_Screen_Area" "$Full_Screen_Withou_Audio" "$Full_Screen_With_Audio" "$Area_Without_Audio" " $Area_With_Audio"  --default "$Area_Without_Audio"`
-
+  result_chart=$?
+  if ! [ $result_chart -eq 0 ]; then
+     rm "$LOCK"
+     kdialog  --error "$Cannel_Msg"
+     exit
+  fi
   FILE_NAME="~/R-$(date -u +%Y-%m-%dT%H-%M-%S).mp4"
   STARTTIME=$(date +%s)
   if [ "$chart" = "$Full_Screen_Withou_Audio" ]; then
@@ -61,8 +68,22 @@ else
    elif [ "$chart" = "$Full_Screen_With_Audio" ]; then
      wf-recorder -a -f $FILE_NAME&&TIMEANDSIZE
    elif [ "$chart" = "$Area_Without_Audio" ]; then
+     output=$(slurp)
+     result_output=$?
+     if ! [ $result_output -eq 0 ]; then
+     rm "$LOCK"
+     kdialog  --error "$Cannel_Msg" 
+     exit
+     fi
      wf-recorder -g "$(slurp)" -f $FILE_NAME&&TIMEANDSIZE
    elif [ "$chart" = "$Area_With_Audio" ]; then
+     output=$(slurp)
+     result_output=$?
+     if ! [ $result_output -eq 0 ]; then
+     rm "$LOCK"
+     kdialog  --error "$Cannel_Msg" 
+     exit
+     fi
      wf-recorder -a -g "$(slurp)" -f $FILE_NAME&&TIMEANDSIZE
    else
      kdialog  --error "$Warring_Msg" 
