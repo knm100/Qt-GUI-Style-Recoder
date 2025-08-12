@@ -6,19 +6,19 @@ Default language is chinese, fallback language is english
 Default storage directory is ~/.
 
 ## Features:
- - Area selection or full screen(GUI Chooser),
- - Record the audio(GUI Chooser),
- - Dialog for Notification(Qt style GUI dialog).
+ - Area selection or full screen(GUI Chooser)
+ - Record the audio(GUI Chooser)
+ - Dialog for Notification(Qt style GUI dialog)
 
 
 ## Dependencies:
-- wf-recorder,
-- bash（need to use the bash command grep,ps,xargs),
-- slurp,
-- kdialog,
-- libpulse.
+- wf-recorder
+- bash（need to use the bash command grep,ps,xargs)
+- slurp
+- kdialog
+- libpulse
 
-## Usage /
-- (optional) Add it to your PATH /
-- (optional) Bind it to a keybind /  
+## Usage 
+- (optional) Add it to your PATH 
+- (optional) Bind it to a shortcut
 - Run it for the first time to record and the second time it will stop recording 
